@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Titanic Survival Predictor</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Matemasie&family=New+Rocker&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExbHhlejA3cDk3OWsyZGxkcTBkZjJ4bWI5Z3UweWEwaWRoaDhtNHA3ciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/wSYE7n6pk9dqRXzitR/giphy.gif');
+            background-size: cover;
+            background-position: center;
+        }
+        .new-rocker-regular {
+            font-family: "New Rocker", system-ui;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-800 text-gray-200">
+    <nav class="bg-gray-900 p-4 text-white text-center">
+        <h1 class="text-3xl font-bold new-rocker-regular">Titanic Survival Predictor</h1>
+    </nav>
+
+    <div class="container mx-auto p-6 mt-12 rounded-lg">
+        <div class="bg-gray-700 bg-opacity-80 shadow-lg rounded-lg p-6 max-w-lg mx-auto">
+            <h2 class="text-2xl text-center mb-6 text-bold">Predict Survival</h2>
+            <form action="{{ url_for('predict') }}" method="post">
+                {% for field in ['pclass', 'sex', 'age', 'sibsp', 'parch', 'fare', 'embarked'] %}
+                <div class="mb-4">
+                    <label for="{{ field }}" class="block text-gray-300">
+                        {% if field == 'pclass' %} Passenger Class 
+                        {% elif field == 'sex' %} Sex (male/female)
+                        {% elif field == 'age' %} Age (in years)
+                        {% elif field == 'sibsp' %} Number of Siblings/Spouses Aboard
+                        {% elif field == 'parch' %} Number of Parents/Children Aboard
+                        {% elif field == 'fare' %} Fare (in currency)
+                        {% elif field == 'embarked' %} Port of Embarkation
+                        {% endif %}
+                    </label>
+                    {% if field in ['pclass', 'sex', 'embarked'] %}
+                    <select name="{{ field }}" required class="mt-1 block w-full bg-gray-600 border-gray-500 rounded-md shadow-sm focus:border-teal-500 focus:ring focus:ring-teal-200">
+                        {% if field == 'pclass' %}
+                        <option value="1">First Class</option>
+                        <option value="2">Second Class</option>
+                        <option value="3">Third Class</option>
+                        {% elif field == 'sex' %}
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        {% else %}
+                        <option value="C">Cherbourg</option>
+                        <option value="Q">Queenstown</option>
+                        <option value="S">Southampton</option>
+                        {% endif %}
+                    </select>
+                    {% else %}
+                    <input type="number" name="{{ field }}" required class="mt-1 block w-full bg-gray-600 border-gray-500 rounded-md shadow-sm focus:border-teal-500 focus:ring focus:ring-teal-200">
+                    {% endif %}
+                </div>
+                {% endfor %}
+                <button type="submit" class="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-200 hover:text-black transition duration-200">Predict</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Cards Section -->
+    <div class="container mx-auto p-6 mt-24 grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <div class="bg-gray-800 p-4 rounded-lg shadow-lg">
+            <h3 class="text-xl font-bold mb-2">Problem Statement</h3>
+            <p class="text-gray-300">The objective of this project is to build a classification model to predict the survival of passengers aboard the Titanic using machine learning techniques.</p>
+        </div>
+        <div class="bg-gray-800 p-4 rounded-lg shadow-lg">
+            <h3 class="text-xl font-bold mb-2">Problem Description</h3>
+            <p class="text-gray-300">The Titanic dataset includes information about the passengers, such as their age, gender, ticket class, and a binary outcome variable indicating survival.</p>
+        </div>
+        <div class="bg-gray-800 p-4 rounded-lg shadow-lg" id="random-forest">
+            <h3 class="text-xl font-bold mb-2">Random Forest Algorithm</h3>
+            <p class="text-gray-300">Random Forest is an ensemble learning method that constructs multiple decision trees during training and outputs the mode of the classes for classification tasks.</p>
+        </div>
+    </div>
+
+    <footer class="bg-gray-900 text-white text-center p-4 fixed bottom-0 w-full">
+        <p>&copy; 2024 Titanic Survival Predictor. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>
