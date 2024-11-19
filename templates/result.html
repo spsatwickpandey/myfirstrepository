@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Result</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Matemasie&family=New+Rocker&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('{{ 'https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExcHRqZmZzM2oyNTI0NTdyMnl5cDRiMHhraWhlY3MxY25oa2l6N2ZzdiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/elJAgBjgmBX6bIUr6d/giphy.gif' if prediction == 'Survived' else 'https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExeXR3NnBzeHR4ZXljMDRkbGl4enlhazZteHcwOHI2bGI5c3phdnA2ZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/CQtgPboZbzDELN8OEW/giphy.gif' }}'); 
+            background-size: cover;
+            background-position: center;
+        }
+        .new-rocker-regular {
+            font-family: "New Rocker", system-ui;
+            font-weight: 400;
+            font-style: normal;
+        }
+    </style>
+</head>
+<body class="bg-gray-800 text-gray-200">
+    <nav class="bg-gray-900 p-4 text-white text-center">
+        <h1 class="text-3xl font-bold new-rocker-regular">Titanic Survival Predictor</h1>
+    </nav>
+    <div class="container mx-auto p-6  min-h-screen flex items-center justify-center">
+        <div class="result-container {{ 'bg-green-800' if prediction == 'Survived' else 'bg-red-800' }} shadow-lg rounded-lg p-8 max-w-lg mx-auto text-center">
+            <div class="result-icon text-6xl mb-4">
+                <i class="{{ 'fas fa-life-ring text-green-500' if prediction == 'Survived' else 'fas fa-water text-red-500' }}"></i>
+            </div>
+            <h2 class="prediction-text text-4xl font-bold mb-4 text-white">Passenger Would Have {{ prediction }}</h2>
+            <p class="text-sm text-gray-300 mb-6">Based on the data provided, this is the predicted outcome.</p>
+            <a href="{{ url_for('home') }}" class="bg-black text-white py-2 px-6 rounded-md hover:bg-green-200 hover:text-black transition duration-200">Make Another Prediction</a>
+        </div>
+    </div>
+    <footer class="bg-gray-900 text-white text-center p-4 fixed bottom-0 w-full">
+        <p>&copy; 2024 Titanic Survival Predictor. All rights reserved.</p>
+    </footer>
+</body>
+</html>
